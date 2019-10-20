@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,12 +9,20 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float maxSpeed;
     [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private GameObject bombPrefab;
+    [SerializeField] Transform bulletSpawn;
+    [SerializeField] Transform bombSpawn;
     private bool canShoot = true;
+    private int crystalsCollected = 0;
+    private Collider shipCollider;
+    [SerializeField] private Text bombsCreated;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        shipCollider = GetComponentInChildren<Collider>();
+        Debug.Log(shipCollider);
     }
 
     // Update is called once per frame
@@ -67,10 +76,17 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if(Input.GetKey(KeyCode.Space) && canShoot == true)
+        if (Input.GetKeyDown(KeyCode.LeftShift) && crystalsCollected > 0)
         {
-            //Maybe adjust firing rate. Also ask about how to make the bullets appear slightly in front of the player, since currently
-            //I would end up shooting myself with my own projectile. The enemy would too.
+            GameObject bomb = Instantiate(bombPrefab, bombSpawn.position, transform.rotation);
+            Physics.IgnoreCollision(bomb.GetComponent<Collider>(), shipCollider);
+            crystalsCollected--;
+            bombsCreated.text = "Bombs: " + crystalsCollected + "/20";
+        }
+
+        if (Input.GetKey(KeyCode.Space) && canShoot == true)
+        {
+            //Maybe adjust firing rate.
             canShoot = false;
             Invoke("shootProjectile", .15f);
         }
@@ -85,8 +101,31 @@ public class PlayerController : MonoBehaviour
 
     void shootProjectile()
     {
-        Instantiate(projectilePrefab, transform.position, transform.rotation);
+        GameObject bullet = Instantiate(projectilePrefab, bulletSpawn.position, transform.rotation);
+        Physics.IgnoreCollision(bullet.GetComponent<Collider>(), shipCollider);
         canShoot = true;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.CompareTag("Crystal"))
+        {
+            if(crystalsCollected < 20)
+            {
+                Destroy(collision.gameObject);
+                crystalsCollected++;
+                bombsCreated.text = "Bombs: " + crystalsCollected + "/20";
+            }
+            else if(crystalsCollected <= 20)
+            {
+                Destroy(collision.gameObject);
+            }
+
+        }
+        else if(collision.gameObject.CompareTag("Projectile"))
+        {
+            Debug.Log("You died!");
+            Destroy(gameObject);
+        }
+    }
 }

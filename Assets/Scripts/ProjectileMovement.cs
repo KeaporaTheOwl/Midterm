@@ -20,7 +20,6 @@ public class ProjectileMovement : MonoBehaviour
 
     private void OnBecameInvisible()
     {
-        //Ask about this. Fix that sometimes it takes a while to "go off screen"
         Destroy(gameObject);
     }
 
