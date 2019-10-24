@@ -16,13 +16,19 @@ public class PlayerController : MonoBehaviour
     private int crystalsCollected = 0;
     private Collider shipCollider;
     [SerializeField] private Text bombsCreated;
+    private ScoreManager scoreManager;
+    public AudioClip shootSound;
+    public AudioClip crystalCollectSound;
+    public AudioClip bombSound;
+    private AudioSource playerAudio;
 
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
+        playerAudio = GetComponent<AudioSource>();
         shipCollider = GetComponentInChildren<Collider>();
-        Debug.Log(shipCollider);
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -81,6 +87,7 @@ public class PlayerController : MonoBehaviour
             GameObject bomb = Instantiate(bombPrefab, bombSpawn.position, transform.rotation);
             Physics.IgnoreCollision(bomb.GetComponent<Collider>(), shipCollider);
             crystalsCollected--;
+            playerAudio.PlayOneShot(bombSound, 1);
             bombsCreated.text = "Bombs: " + crystalsCollected + "/20";
         }
 
@@ -88,7 +95,7 @@ public class PlayerController : MonoBehaviour
         {
             //Maybe adjust firing rate.
             canShoot = false;
-            Invoke("shootProjectile", .15f);
+            Invoke("ShootProjectile", .15f);
         }
 
         if (playerRb.velocity.magnitude > maxSpeed)
@@ -99,10 +106,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void shootProjectile()
+    void ShootProjectile()
     {
         GameObject bullet = Instantiate(projectilePrefab, bulletSpawn.position, transform.rotation);
         Physics.IgnoreCollision(bullet.GetComponent<Collider>(), shipCollider);
+        playerAudio.PlayOneShot(shootSound, 1);
         canShoot = true;
     }
 
@@ -114,11 +122,14 @@ public class PlayerController : MonoBehaviour
             {
                 Destroy(collision.gameObject);
                 crystalsCollected++;
+                playerAudio.PlayOneShot(crystalCollectSound, 1);
                 bombsCreated.text = "Bombs: " + crystalsCollected + "/20";
+                scoreManager.CrystalScoring();
             }
             else if(crystalsCollected <= 20)
             {
                 Destroy(collision.gameObject);
+                scoreManager.CrystalScoring();
             }
 
         }

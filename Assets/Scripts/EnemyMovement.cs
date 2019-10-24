@@ -13,6 +13,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float rateOfFire = 3f;
     [SerializeField] Transform enemyBulletSpawn;
     private Collider enemyShipCollider;
+    private ScoreManager scoreManager;
+    private AudioSource enemyAudio;
+    public AudioClip enemyShootSound;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +23,8 @@ public class EnemyMovement : MonoBehaviour
         enemyRb = GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         enemyShipCollider = GetComponentInChildren<Collider>();
+        scoreManager = FindObjectOfType<ScoreManager>();
+        enemyAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,15 +41,16 @@ public class EnemyMovement : MonoBehaviour
         if(distance < firingRange && Time.time > reload + rateOfFire)
         {
             reload = Time.time;
-            shootProjectile();
+            ShootProjectile();
         }
 
     }
 
-    void shootProjectile()
+    void ShootProjectile()
     {
         GameObject enemyBullet = Instantiate(enemyProjectilePrefab, enemyBulletSpawn.position, transform.rotation);
         Physics.IgnoreCollision(enemyBullet.GetComponent<Collider>(), enemyShipCollider);
+        enemyAudio.PlayOneShot(enemyShootSound, 1);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -53,11 +59,13 @@ public class EnemyMovement : MonoBehaviour
         {
             Destroy(gameObject);
             Destroy(collision.gameObject);
+            scoreManager.EnemyScoring();
         }
         else if (collision.gameObject.CompareTag("Bomb"))
         {
             Destroy(gameObject);
             Destroy(collision.gameObject);
+            scoreManager.EnemyScoring();
         }
     }
 }

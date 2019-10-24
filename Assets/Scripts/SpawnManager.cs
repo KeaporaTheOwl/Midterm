@@ -49,17 +49,17 @@ public class SpawnManager : MonoBehaviour
         if (Time.time > enemySpawnTime + enemySpawnDelay)
         {
             enemySpawnTime = Time.time;
-            spawnEnemies();
+            SpawnEnemies();
         }
 
         if (Time.time > asteroidSpawnTime + asteroidSpawnDelay)
         {
             asteroidSpawnTime = Time.time;
-            spawnAsteroids();
+            SpawnAsteroids();
         }
     }
 
-    void spawnEnemies()
+    void SpawnEnemies()
     {
         while(enemiesSpawned < 10)
         {
@@ -72,7 +72,7 @@ public class SpawnManager : MonoBehaviour
         enemiesSpawned = 0;
     }
 
-    void spawnAsteroids()
+    void SpawnAsteroids()
     {
         while(asteroidsSpawned < 30)
         {

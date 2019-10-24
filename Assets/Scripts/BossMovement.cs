@@ -9,13 +9,14 @@ public class BossMovement : MonoBehaviour
     [SerializeField] private float bossSpeed;
     private Rigidbody bossRb;
     private GameObject player;
+    private ScoreManager scoreManager;
 
     // Start is called before the first frame update
     void Start()
     {
         bossRb = gameObject.GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
-
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -24,6 +25,7 @@ public class BossMovement : MonoBehaviour
         if(bossHealth == 0)
         {
             Destroy(gameObject);
+            scoreManager.BossDestructionScoring();
             Debug.Log("Boss Destroyed");
         }
 
@@ -42,6 +44,7 @@ public class BossMovement : MonoBehaviour
         {
             bossHealth--;
             Destroy(collision.gameObject);
+            scoreManager.BossDamageScoring();
         }
         else
         {

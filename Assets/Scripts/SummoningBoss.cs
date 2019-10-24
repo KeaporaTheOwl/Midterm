@@ -10,11 +10,12 @@ public class SummoningBoss : MonoBehaviour
     private int summoningComplete = 15;
     private float summoningTime;
     private float summoningDelay = 5;
+    private ScoreManager scoreManager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        scoreManager = FindObjectOfType<ScoreManager>();
     }
 
     // Update is called once per frame
@@ -40,6 +41,7 @@ public class SummoningBoss : MonoBehaviour
         {
             summoningProgress--;
             Destroy(collision.gameObject);
+            scoreManager.BossDamageScoring();
         }
         else if(collision.gameObject.CompareTag("Asteroid"))
         {
