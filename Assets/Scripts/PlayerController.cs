@@ -8,6 +8,8 @@ public class PlayerController : MonoBehaviour
     private Rigidbody playerRb;
     public float speed;
     public float maxSpeed;
+    private float xRange = 155;
+    private float zRange = 155;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private GameObject bombPrefab;
     [SerializeField] Transform bulletSpawn;
@@ -20,7 +22,9 @@ public class PlayerController : MonoBehaviour
     public AudioClip shootSound;
     public AudioClip crystalCollectSound;
     public AudioClip bombSound;
+    public AudioClip playerDeath;
     private AudioSource playerAudio;
+    public ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -34,8 +38,6 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Ask about this. Problem I'm having is that the editor runs like crap when off of my charger, which makes the game slow.
-        //If I change to time.deltatime to fix it being based off frame rate, it runs at a snail's pace. Works fine at plugged in speed.
         float forwardInput = Input.GetAxis("Vertical");
         playerRb.AddForce(Vector3.forward * speed * forwardInput, ForceMode.VelocityChange);
 
@@ -100,8 +102,27 @@ public class PlayerController : MonoBehaviour
 
         if (playerRb.velocity.magnitude > maxSpeed)
         {
-            //playerRb.velocity = Vector3.ClampMagnitude(playerRb.velocity, maxSpeed);
             playerRb.velocity = playerRb.velocity.normalized * maxSpeed;
+        }
+
+        if (transform.position.x < -xRange)
+        {
+            transform.position = new Vector3(-xRange, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.x > xRange)
+        {
+            transform.position = new Vector3(xRange, transform.position.y, transform.position.z);
+        }
+
+        if (transform.position.z < -zRange)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, -zRange);
+        }
+
+        if (transform.position.z > zRange)
+        {
+            transform.position = new Vector3(transform.position.x, transform.position.y, zRange);
         }
 
     }
@@ -135,7 +156,9 @@ public class PlayerController : MonoBehaviour
         }
         else if(collision.gameObject.CompareTag("Projectile"))
         {
-            Debug.Log("You died!");
+            //Problem. Need to make sound play even after player dies. Same with particle effects.
+            playerAudio.PlayOneShot(playerDeath, 1);
+            explosionParticle.Play();
             Destroy(gameObject);
         }
     }

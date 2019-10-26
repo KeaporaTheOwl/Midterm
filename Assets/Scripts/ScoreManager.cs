@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    //Ask how to pull the variables from the other classes so that I can track a score and the summoning progress.
     private int score = 0;
     [SerializeField] private Text playerScore;
 
