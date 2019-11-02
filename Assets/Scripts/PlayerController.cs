@@ -2,29 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
-    public float speed;
-    public float maxSpeed;
+    [SerializeField] private float speed;
+    [SerializeField] private float maxSpeed;
     private float xRange = 155;
     private float zRange = 155;
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private GameObject bombPrefab;
+    [SerializeField] private GameObject respawnPosition;
+    [SerializeField] private GameObject playerShipModel;
     [SerializeField] Transform bulletSpawn;
     [SerializeField] Transform bombSpawn;
     private bool canShoot = true;
     private int crystalsCollected = 0;
+    private int playerLives = 3;
     private Collider shipCollider;
     [SerializeField] private Text bombsCreated;
+    [SerializeField] private Text lifeCounter;
     private ScoreManager scoreManager;
-    public AudioClip shootSound;
-    public AudioClip crystalCollectSound;
-    public AudioClip bombSound;
-    public AudioClip playerDeath;
+    [SerializeField] private AudioClip shootSound;
+    [SerializeField] private AudioClip crystalCollectSound;
+    [SerializeField] private AudioClip bombSound;
+    [SerializeField] private AudioClip playerDeath;
     private AudioSource playerAudio;
-    public ParticleSystem explosionParticle;
+    [SerializeField] private ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -156,10 +161,59 @@ public class PlayerController : MonoBehaviour
         }
         else if(collision.gameObject.CompareTag("Projectile"))
         {
-            //Problem. Need to make sound play even after player dies. Same with particle effects.
             playerAudio.PlayOneShot(playerDeath, 1);
             explosionParticle.Play();
-            Destroy(gameObject);
+            playerShipModel.SetActive(false);
+            playerLives--;
+            lifeCounter.text = "Lives: " + playerLives;
+
+            if(playerLives > 0)
+            {
+                Invoke("Respawn", 3);
+            }
+            else
+            {
+                Invoke("GameOver", 2);
+            }
+
+            gameObject.GetComponent<PlayerController>().enabled = false;
+        }
+        else if(collision.gameObject.CompareTag("Boss"))
+        {
+            playerAudio.PlayOneShot(playerDeath, 1);
+            explosionParticle.Play();
+            playerShipModel.SetActive(false);
+            playerLives--;
+            lifeCounter.text = "Lives: " + playerLives;
+
+            if (playerLives > 0)
+            {
+                Invoke("Respawn", 3);
+            }
+            else
+            {
+                Invoke("GameOver", 2);
+            }
+
+            gameObject.GetComponent<PlayerController>().enabled = false;
+        }
+        else
+        {
+
         }
     }
+
+    void GameOver()
+    {
+        SceneManager.LoadScene("Game Over");
+    }
+
+    void Respawn()
+    {
+        playerRb.position = respawnPosition.transform.position;
+        playerShipModel.SetActive(true);
+        gameObject.GetComponent<PlayerController>().enabled = true;
+    }
+    //Disable ship model (with reference), disable script, deduct a life, effects play, teleport to spawn (rigidbody.position =), enable ship model, enable script
+
 }

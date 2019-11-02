@@ -11,11 +11,14 @@ public class SummoningBoss : MonoBehaviour
     private float summoningTime;
     private float summoningDelay = 5;
     private ScoreManager scoreManager;
+    private AudioSource summoningAudio;
+    [SerializeField] private AudioClip summoningDamage;
 
     // Start is called before the first frame update
     void Start()
     {
         scoreManager = FindObjectOfType<ScoreManager>();
+        summoningAudio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -40,6 +43,7 @@ public class SummoningBoss : MonoBehaviour
         if(collision.gameObject.CompareTag("Bomb"))
         {
             summoningProgress--;
+            summoningAudio.PlayOneShot(summoningDamage, 1);
             Destroy(collision.gameObject);
             scoreManager.BossDamageScoring();
         }

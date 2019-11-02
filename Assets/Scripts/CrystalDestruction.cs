@@ -13,8 +13,11 @@ public class CrystalDestruction : MonoBehaviour
     private bool firstDrop = false;
     private bool secondDrop = false;
     private AudioSource asteroidAudio;
-    public AudioClip crystalOneSound;
-    public AudioClip crystalTwoSound;
+    [SerializeField] private AudioClip crystalOneSound;
+    [SerializeField] private AudioClip crystalTwoSound;
+    [SerializeField] private AudioClip asteroidDestruction;
+    [SerializeField] private ParticleSystem asteroidExplosion;
+    [SerializeField] private GameObject asteroidModel;
 
     // Start is called before the first frame update
     void Start()
@@ -45,8 +48,12 @@ public class CrystalDestruction : MonoBehaviour
 
         if(healthPool == hitsTaken)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 5);
             scoreManager.AsteroidScoring();
+            asteroidModel.SetActive(false);
+            asteroidExplosion.Play();
+            asteroidAudio.PlayOneShot(asteroidDestruction, 1);
+            gameObject.GetComponent<CrystalDestruction>().enabled = false;
         }
     }
 

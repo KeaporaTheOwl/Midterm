@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BossMovement : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class BossMovement : MonoBehaviour
     private Rigidbody bossRb;
     private GameObject player;
     private ScoreManager scoreManager;
+    private AudioSource bossAudio;
+    [SerializeField] private AudioClip bossDamaged;
+    [SerializeField] private AudioClip bossDestroyed;
+    [SerializeField] private AudioClip spawnSound;
+    [SerializeField] private GameObject bossModel;
+    [SerializeField] private ParticleSystem bossExplosion;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +24,8 @@ public class BossMovement : MonoBehaviour
         bossRb = gameObject.GetComponent<Rigidbody>();
         player = GameObject.Find("Player");
         scoreManager = FindObjectOfType<ScoreManager>();
+        bossAudio = GetComponent<AudioSource>();
+        bossAudio.PlayOneShot(spawnSound, 1);
     }
 
     // Update is called once per frame
@@ -24,9 +33,31 @@ public class BossMovement : MonoBehaviour
     {
         if(bossHealth == 0)
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 5);
             scoreManager.BossDestructionScoring();
-            Debug.Log("Boss Destroyed");
+            bossModel.SetActive(false);
+            gameObject.GetComponent<BossMovement>().enabled = false;
+            bossAudio.PlayOneShot(bossDestroyed, 1);
+            bossExplosion.Play();
+            GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+            GameObject[] allAsteroids = GameObject.FindGameObjectsWithTag("Asteroid");
+            GameObject[] allCrystals = GameObject.FindGameObjectsWithTag("Crystal");
+            Invoke("GameOver", 3);
+
+            foreach(GameObject enemy in allEnemies)
+            {
+                Destroy(enemy);
+            }
+
+            foreach(GameObject asteroid in allAsteroids)
+            {
+                Destroy(asteroid);
+            }
+
+            foreach(GameObject crystal in allCrystals)
+            {
+                Destroy(crystal);
+            }
         }
 
         float distance = Vector3.Distance(player.transform.position, transform.position);
@@ -45,10 +76,32 @@ public class BossMovement : MonoBehaviour
             bossHealth--;
             Destroy(collision.gameObject);
             scoreManager.BossDamageScoring();
+            bossAudio.PlayOneShot(bossDamaged, 1);
         }
-        else
+        else if(collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
         }
+        else if(collision.gameObject.CompareTag("Asteroid"))
+        {
+            Destroy(collision.gameObject);
+        }
+        else if(collision.gameObject.CompareTag("Crystal"))
+        {
+            Destroy(collision.gameObject);
+        }
+        else if(collision.gameObject.CompareTag("Projectile"))
+        {
+            Destroy(collision.gameObject);
+        }
+        else
+        {
+
+        }
+    }
+
+    private void GameOver()
+    {
+        SceneManager.LoadScene("Game Over");
     }
 }

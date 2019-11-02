@@ -15,7 +15,10 @@ public class EnemyMovement : MonoBehaviour
     private Collider enemyShipCollider;
     private ScoreManager scoreManager;
     private AudioSource enemyAudio;
-    public AudioClip enemyShootSound;
+    [SerializeField] private AudioClip enemyShootSound;
+    [SerializeField] private AudioClip enemyDeath;
+    [SerializeField] private GameObject enemyShipModel;
+    [SerializeField] private ParticleSystem explosionParticle;
 
     // Start is called before the first frame update
     void Start()
@@ -57,15 +60,28 @@ public class EnemyMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Projectile"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 5);
             Destroy(collision.gameObject);
             scoreManager.EnemyScoring();
+            enemyShipModel.SetActive(false);
+            explosionParticle.Play();
+            enemyAudio.PlayOneShot(enemyDeath, 1);
+            gameObject.GetComponent<EnemyMovement>().enabled = false;
+
         }
         else if (collision.gameObject.CompareTag("Bomb"))
         {
-            Destroy(gameObject);
+            Destroy(gameObject, 5);
             Destroy(collision.gameObject);
             scoreManager.EnemyScoring();
+            enemyShipModel.SetActive(false);
+            explosionParticle.Play();
+            enemyAudio.PlayOneShot(enemyDeath, 1);
+            gameObject.GetComponent<EnemyMovement>().enabled = false;
+        }
+        else if (collision.gameObject.CompareTag("Crystal"))
+        {
+            Destroy(collision.gameObject);
         }
     }
 }

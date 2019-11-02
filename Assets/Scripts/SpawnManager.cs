@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-    public GameObject[] asteroidPrefabs;
-    public GameObject enemyFighters;
-    public GameObject bossSummoner;
+    [SerializeField] private GameObject[] asteroidPrefabs;
+    [SerializeField] private GameObject enemyFighters;
+    [SerializeField] private GameObject bossSummoner;
     private int initialEnemiesSpawned;
     private int initialAsteroidsSpawned;
     private int enemiesSpawned;
@@ -23,7 +23,7 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        while (initialEnemiesSpawned < 20)
+        while (initialEnemiesSpawned < 10)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-initialEnemySpawnRangeX, initialEnemySpawnRangeX), 0, Random.Range(-initialEnemySpawnRangeZ, initialEnemySpawnRangeZ));
             Instantiate(enemyFighters, spawnPos, transform.rotation);
@@ -61,7 +61,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnEnemies()
     {
-        while(enemiesSpawned < 10)
+        while(enemiesSpawned < 5)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
             Instantiate(enemyFighters, spawnPos, transform.rotation);
