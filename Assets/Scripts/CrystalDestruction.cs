@@ -32,21 +32,21 @@ public class CrystalDestruction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(firstDrop == false && hitsTaken == dropOne)
+        if (firstDrop == false && hitsTaken == dropOne)
         {
             DropCrystal();
             firstDrop = true;
             asteroidAudio.PlayOneShot(crystalOneSound, 1);
         }
 
-        if(secondDrop == false && hitsTaken == dropTwo)
+        if (secondDrop == false && hitsTaken == dropTwo)
         {
             DropCrystal();
             secondDrop = true;
             asteroidAudio.PlayOneShot(crystalTwoSound, 1);
         }
 
-        if(healthPool == hitsTaken)
+        if (healthPool == hitsTaken)
         {
             Destroy(gameObject, 5);
             scoreManager.AsteroidScoring();
@@ -59,19 +59,19 @@ public class CrystalDestruction : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Projectile"))
+        if (collision.gameObject.CompareTag("Projectile"))
         {
             hitsTaken++;
             Destroy(collision.gameObject);
         }
-        else if(collision.gameObject.CompareTag("Bomb"))
+        else if (collision.gameObject.CompareTag("Bomb"))
         {
             hitsTaken++;
             Destroy(collision.gameObject);
         }
     }
 
-    void DropCrystal()
+    private void DropCrystal()
     {
         Instantiate(crystalDrop, transform.position, transform.rotation);
     }

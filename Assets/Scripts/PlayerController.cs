@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody playerRb;
-    [SerializeField] private float speed;
-    [SerializeField] private float maxSpeed;
+    private float speed = 1f;
+    private float maxSpeed = 10f;
     private float xRange = 155;
     private float zRange = 155;
     [SerializeField] private GameObject projectilePrefab;
@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform bombSpawn;
     private bool canShoot = true;
     private int crystalsCollected = 0;
+    private int maxCrystals = 20;
     private int playerLives = 3;
     private Collider shipCollider;
     [SerializeField] private Text bombsCreated;
@@ -100,7 +101,6 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Space) && canShoot == true)
         {
-            //Maybe adjust firing rate.
             canShoot = false;
             Invoke("ShootProjectile", .15f);
         }
@@ -132,7 +132,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void ShootProjectile()
+    private void ShootProjectile()
     {
         GameObject bullet = Instantiate(projectilePrefab, bulletSpawn.position, transform.rotation);
         Physics.IgnoreCollision(bullet.GetComponent<Collider>(), shipCollider);
@@ -142,9 +142,9 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Crystal"))
+        if (collision.gameObject.CompareTag("Crystal"))
         {
-            if(crystalsCollected < 20)
+            if (crystalsCollected < maxCrystals)
             {
                 Destroy(collision.gameObject);
                 crystalsCollected++;
@@ -152,33 +152,14 @@ public class PlayerController : MonoBehaviour
                 bombsCreated.text = "Bombs: " + crystalsCollected + "/20";
                 scoreManager.CrystalScoring();
             }
-            else if(crystalsCollected <= 20)
+            else if (crystalsCollected <= maxCrystals)
             {
                 Destroy(collision.gameObject);
                 scoreManager.CrystalScoring();
             }
 
         }
-        else if(collision.gameObject.CompareTag("Projectile"))
-        {
-            playerAudio.PlayOneShot(playerDeath, 1);
-            explosionParticle.Play();
-            playerShipModel.SetActive(false);
-            playerLives--;
-            lifeCounter.text = "Lives: " + playerLives;
-
-            if(playerLives > 0)
-            {
-                Invoke("Respawn", 3);
-            }
-            else
-            {
-                Invoke("GameOver", 2);
-            }
-
-            gameObject.GetComponent<PlayerController>().enabled = false;
-        }
-        else if(collision.gameObject.CompareTag("Boss"))
+        else if (collision.gameObject.CompareTag("Projectile"))
         {
             playerAudio.PlayOneShot(playerDeath, 1);
             explosionParticle.Play();
@@ -197,23 +178,36 @@ public class PlayerController : MonoBehaviour
 
             gameObject.GetComponent<PlayerController>().enabled = false;
         }
-        else
+        else if (collision.gameObject.CompareTag("Boss"))
         {
+            playerAudio.PlayOneShot(playerDeath, 1);
+            explosionParticle.Play();
+            playerShipModel.SetActive(false);
+            playerLives--;
+            lifeCounter.text = "Lives: " + playerLives;
 
+            if (playerLives > 0)
+            {
+                Invoke("Respawn", 3);
+            }
+            else
+            {
+                Invoke("GameOver", 2);
+            }
+
+            gameObject.GetComponent<PlayerController>().enabled = false;
         }
     }
 
-    void GameOver()
+    private void GameOver()
     {
         SceneManager.LoadScene("Game Over");
     }
 
-    void Respawn()
+    private void Respawn()
     {
         playerRb.position = respawnPosition.transform.position;
         playerShipModel.SetActive(true);
         gameObject.GetComponent<PlayerController>().enabled = true;
     }
-    //Disable ship model (with reference), disable script, deduct a life, effects play, teleport to spawn (rigidbody.position =), enable ship model, enable script
-
 }

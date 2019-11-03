@@ -9,8 +9,12 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject bossSummoner;
     private int initialEnemiesSpawned;
     private int initialAsteroidsSpawned;
+    private int maxInitialEnemiesSpawned = 10;
+    private int maxInitialAsteroidsSpawned = 1000;
     private int enemiesSpawned;
     private int asteroidsSpawned;
+    private int maxEnemiesSpawned = 5;
+    private int maxAsteroidsSpawned = 30;
     private float spawnRangeX = 150;
     private float spawnRangeZ = 150;
     private float initialEnemySpawnRangeX = 150;
@@ -23,14 +27,14 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        while (initialEnemiesSpawned < 10)
+        while (initialEnemiesSpawned < maxInitialEnemiesSpawned)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-initialEnemySpawnRangeX, initialEnemySpawnRangeX), 0, Random.Range(-initialEnemySpawnRangeZ, initialEnemySpawnRangeZ));
             Instantiate(enemyFighters, spawnPos, transform.rotation);
             initialEnemiesSpawned++;
         }
 
-        while (initialAsteroidsSpawned < 1000)
+        while (initialAsteroidsSpawned < maxInitialAsteroidsSpawned)
         {
             int asteroidIndex = Random.Range(0, asteroidPrefabs.Length);
             Vector3 spawnPosTwo = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
@@ -40,7 +44,6 @@ public class SpawnManager : MonoBehaviour
 
         Vector3 spawnPosThree = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
         Instantiate(bossSummoner, spawnPosThree, transform.rotation);
-
     }
 
     // Update is called once per frame
@@ -59,22 +62,21 @@ public class SpawnManager : MonoBehaviour
         }
     }
 
-    void SpawnEnemies()
+    private void SpawnEnemies()
     {
-        while(enemiesSpawned < 5)
+        while (enemiesSpawned < maxEnemiesSpawned)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
             Instantiate(enemyFighters, spawnPos, transform.rotation);
             enemiesSpawned++;
         }
 
-        Debug.Log("Spawned Enemies");
         enemiesSpawned = 0;
     }
 
-    void SpawnAsteroids()
+    private void SpawnAsteroids()
     {
-        while(asteroidsSpawned < 30)
+        while (asteroidsSpawned < maxAsteroidsSpawned)
         {
             int asteroidIndex = Random.Range(0, asteroidPrefabs.Length);
             Vector3 spawnPosTwo = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, Random.Range(-spawnRangeZ, spawnRangeZ));
@@ -82,7 +84,6 @@ public class SpawnManager : MonoBehaviour
             asteroidsSpawned++;
         }
 
-        Debug.Log("Spawned Asteroids");
         asteroidsSpawned = 0;
     }
 }

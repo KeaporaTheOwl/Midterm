@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class BossMovement : MonoBehaviour
 {
     private int bossHealth = 15;
-    [SerializeField] private float bossSpeed;
+    private float bossSpeed = 15f;
     private Rigidbody bossRb;
     private GameObject player;
     private ScoreManager scoreManager;
@@ -31,7 +31,7 @@ public class BossMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(bossHealth == 0)
+        if (bossHealth == 0)
         {
             Destroy(gameObject, 5);
             scoreManager.BossDestructionScoring();
@@ -44,17 +44,17 @@ public class BossMovement : MonoBehaviour
             GameObject[] allCrystals = GameObject.FindGameObjectsWithTag("Crystal");
             Invoke("GameOver", 3);
 
-            foreach(GameObject enemy in allEnemies)
+            foreach (GameObject enemy in allEnemies)
             {
                 Destroy(enemy);
             }
 
-            foreach(GameObject asteroid in allAsteroids)
+            foreach (GameObject asteroid in allAsteroids)
             {
                 Destroy(asteroid);
             }
 
-            foreach(GameObject crystal in allCrystals)
+            foreach (GameObject crystal in allCrystals)
             {
                 Destroy(crystal);
             }
@@ -78,25 +78,21 @@ public class BossMovement : MonoBehaviour
             scoreManager.BossDamageScoring();
             bossAudio.PlayOneShot(bossDamaged, 1);
         }
-        else if(collision.gameObject.CompareTag("Enemy"))
+        else if (collision.gameObject.CompareTag("Enemy"))
         {
             Destroy(collision.gameObject);
         }
-        else if(collision.gameObject.CompareTag("Asteroid"))
+        else if (collision.gameObject.CompareTag("Asteroid"))
         {
             Destroy(collision.gameObject);
         }
-        else if(collision.gameObject.CompareTag("Crystal"))
+        else if (collision.gameObject.CompareTag("Crystal"))
         {
             Destroy(collision.gameObject);
         }
-        else if(collision.gameObject.CompareTag("Projectile"))
+        else if (collision.gameObject.CompareTag("Projectile"))
         {
             Destroy(collision.gameObject);
-        }
-        else
-        {
-
         }
     }
 

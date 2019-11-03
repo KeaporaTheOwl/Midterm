@@ -24,14 +24,13 @@ public class SummoningBoss : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Time.time > summoningTime + summoningDelay)
+        if (Time.time > summoningTime + summoningDelay)
         {
             summoningTime = Time.time;
             summoningProgress++;
-            Debug.Log("Summoning Progress: " + summoningProgress + "/" + summoningComplete);
         }
 
-        if(summoningProgress == summoningComplete)
+        if (summoningProgress == summoningComplete)
         {
             Instantiate(boss, transform.position, transform.rotation);
             Destroy(gameObject);
@@ -40,24 +39,20 @@ public class SummoningBoss : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.CompareTag("Bomb"))
+        if (collision.gameObject.CompareTag("Bomb"))
         {
             summoningProgress--;
             summoningAudio.PlayOneShot(summoningDamage, 1);
             Destroy(collision.gameObject);
             scoreManager.BossDamageScoring();
         }
-        else if(collision.gameObject.CompareTag("Asteroid"))
+        else if (collision.gameObject.CompareTag("Asteroid"))
         {
             Destroy(collision.gameObject);
         }
-        else if(collision.gameObject.CompareTag("Projectile"))
+        else if (collision.gameObject.CompareTag("Projectile"))
         {
             Destroy(collision.gameObject);
-        }
-        else
-        {
-
         }
     }
 }

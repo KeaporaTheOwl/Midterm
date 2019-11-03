@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    [SerializeField] private float enemySpeed;
+    private float enemySpeed = 5f;
     private Rigidbody enemyRb;
     private GameObject player;
     [SerializeField] private GameObject enemyProjectilePrefab;
     private float firingRange = 8f;
     private float reload;
-    [SerializeField] private float rateOfFire = 3f;
+    private float rateOfFire = 3f;
     [SerializeField] Transform enemyBulletSpawn;
     private Collider enemyShipCollider;
     private ScoreManager scoreManager;
@@ -34,22 +34,21 @@ public class EnemyMovement : MonoBehaviour
     void Update()
     {
         float distance = Vector3.Distance(player.transform.position, transform.position);
-        
+
         Vector3 lookDirection = (player.transform.position - transform.position).normalized;
         enemyRb.AddForce(lookDirection * enemySpeed);
 
         Vector3 targetPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
         transform.LookAt(targetPosition);
 
-        if(distance < firingRange && Time.time > reload + rateOfFire)
+        if (distance < firingRange && Time.time > reload + rateOfFire)
         {
             reload = Time.time;
             ShootProjectile();
         }
-
     }
 
-    void ShootProjectile()
+    private void ShootProjectile()
     {
         GameObject enemyBullet = Instantiate(enemyProjectilePrefab, enemyBulletSpawn.position, transform.rotation);
         Physics.IgnoreCollision(enemyBullet.GetComponent<Collider>(), enemyShipCollider);
@@ -67,7 +66,6 @@ public class EnemyMovement : MonoBehaviour
             explosionParticle.Play();
             enemyAudio.PlayOneShot(enemyDeath, 1);
             gameObject.GetComponent<EnemyMovement>().enabled = false;
-
         }
         else if (collision.gameObject.CompareTag("Bomb"))
         {

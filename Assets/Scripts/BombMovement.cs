@@ -7,9 +7,7 @@ public class BombMovement : MonoBehaviour
     private Rigidbody bombRb;
     private GameObject boss;
     private GameObject summoningStation;
-    [SerializeField] private float bombSpeed;
-
-    //Just ask about this whole script. It just isn't working.
+    private float bombSpeed = 12f;
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +20,7 @@ public class BombMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(boss != null)
+        if (boss != null)
         {
             float distance = Vector3.Distance(boss.transform.position, transform.position);
 
@@ -42,6 +40,5 @@ public class BombMovement : MonoBehaviour
             Vector3 targetPosition = new Vector3(summoningStation.transform.position.x, transform.position.y, summoningStation.transform.position.z);
             transform.LookAt(targetPosition);
         }
-
     }
 }

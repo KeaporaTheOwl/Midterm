@@ -256,19 +256,19 @@ MonoBehaviour:
   m_text: 'Huge thanks to the following:
 
 
-    - JFXR for various 8-bit noises
+    - JFXR for various 8-bit noises.
 
-    - Kenney for their space assets and sound effects
+    - Kenney for their space assets and sound effects.
 
-    - Unity''s Create With Code for their lessons
+    - Unity''s Create With Code for their lessons.
 
-    - Michael Hadley for support and his class teachings
+    - Michael Hadley for support and his class teachings.
 
-    - AurynSky for their ultimate gem pack
+    - AurynSky for their ultimate gem pack.
 
-    - SpaceSkies for their skyboxes
+    - SpaceSkies for their skyboxes.
 
-    - Music courtesy of Eric Skiff (EricSkiff.com/music)'
+    - Music courtesy of Eric Skiff (EricSkiff.com/music).'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 125cb55b44b24c4393181402bc6200e6, type: 2}
@@ -1225,7 +1225,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 981479627}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1374730156}
+        m_MethodName: Quit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &981479627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2100,7 +2111,6 @@ GameObject:
   - component: {fileID: 1374730153}
   - component: {fileID: 1374730152}
   - component: {fileID: 1374730156}
-  - component: {fileID: 1374730157}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2205,18 +2215,6 @@ MonoBehaviour:
   mainMenu: {fileID: 16157297}
   creditsMenu: {fileID: 284566781}
   instructionsMenu: {fileID: 1216295725}
---- !u!114 &1374730157
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374730151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b71ff1526fce9d489cf766c4cf963c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1778414762
 GameObject:
   m_ObjectHideFlags: 0
@@ -2299,8 +2297,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1374730157}
-        m_MethodName: LoadGameScene
+      - m_Target: {fileID: 1374730156}
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

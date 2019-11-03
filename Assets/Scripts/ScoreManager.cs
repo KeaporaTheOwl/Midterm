@@ -6,13 +6,12 @@ using UnityEngine.UI;
 public class ScoreManager : MonoBehaviour
 {
     public static int score = 0;
+    private int asteroidPoints = 5;
+    private int crystalPoints = 200;
+    private int enemyPoints = 500;
+    private int bossDamagePoints = 500;
+    private int bossDestructionPoints = 15000;
     [SerializeField] private Text playerScore;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
 
     // Update is called once per frame
     void Update()
@@ -22,26 +21,26 @@ public class ScoreManager : MonoBehaviour
 
     public void AsteroidScoring()
     {
-        score = score + 5;
+        score = score + asteroidPoints;
     }
 
     public void CrystalScoring()
     {
-        score = score + 200;
+        score = score + crystalPoints;
     }
 
     public void EnemyScoring()
     {
-        score = score + 500;
+        score = score + enemyPoints;
     }
 
     public void BossDamageScoring()
     {
-        score = score + 500;
+        score = score + bossDamagePoints;
     }
 
     public void BossDestructionScoring()
     {
-        score = score + 15000;
+        score = score + bossDestructionPoints;
     }
 }
