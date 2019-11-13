@@ -18,9 +18,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform bulletSpawn;
     [SerializeField] Transform bombSpawn;
     private bool canShoot = true;
+    private bool hasPowerup = false;
     private int crystalsCollected = 0;
     private int maxCrystals = 20;
     private int playerLives = 3;
+    private float firingSpeed = .15f;
     private Collider shipCollider;
     [SerializeField] private Text bombsCreated;
     [SerializeField] private Text lifeCounter;
@@ -102,7 +104,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.Space) && canShoot == true)
         {
             canShoot = false;
-            Invoke("ShootProjectile", .15f);
+            Invoke("ShootProjectile", firingSpeed);
         }
 
         if (playerRb.velocity.magnitude > maxSpeed)
@@ -197,6 +199,22 @@ public class PlayerController : MonoBehaviour
 
             gameObject.GetComponent<PlayerController>().enabled = false;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.CompareTag("Powerup"))
+        {
+            firingSpeed = .075f;
+            Destroy(other.gameObject);
+            StartCoroutine(PowerUpCountdownRoutine());
+        }
+    }
+
+    IEnumerator PowerUpCountdownRoutine()
+    {
+        yield return new WaitForSeconds(7);
+        firingSpeed = .15f;
     }
 
     private void GameOver()

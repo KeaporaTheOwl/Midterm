@@ -12,6 +12,7 @@ TagManager:
   - Summoning Platform
   - Boss
   - Enemy
+  - Powerup
   layers:
   - Default
   - TransparentFX

@@ -948,6 +948,89 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1310675941}
   m_CullTransparentMesh: 0
+--- !u!1001 &1564884659
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1785269954}
+    m_Modifications:
+    - target: {fileID: 100000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_Name
+      value: Tracker Arrow Model
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -180
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2300000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6217dd83a11a7df46b82193c138a8ce2, type: 3}
+--- !u!4 &1564884664 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400000, guid: 6217dd83a11a7df46b82193c138a8ce2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1564884659}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1662020040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,8 +1182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c45b1c64fdba4441a888075aa30abb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  maxSpeed: 10
   projectilePrefab: {fileID: 2814634884667819216, guid: 396df139f6ef43148a27239ebe7735e0,
     type: 3}
   bombPrefab: {fileID: 225640495954848333, guid: 6ba7eb65e87b2ba42ab4e7155ad7ea1f,
@@ -1228,6 +1309,51 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &1785269953
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1785269954}
+  - component: {fileID: 1785269955}
+  m_Layer: 0
+  m_Name: Tracker Arrow
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1785269954
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785269953}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1564884664}
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1785269955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785269953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a32a559d6552f42821885e07eea0a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1718698359}
 --- !u!1001 &1848431833
 PrefabInstance:
   m_ObjectHideFlags: 0
