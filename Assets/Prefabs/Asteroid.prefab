@@ -161,6 +161,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystalDrop: {fileID: 1385888681521713006, guid: 541aaa60bafc99b409c9349cd28d1ba9,
     type: 3}
+  powerup: {fileID: 1615135074693538809, guid: 9ddd33d23f5f33a44b28b5ab2c73e819, type: 3}
   crystalOneSound: {fileID: 8300000, guid: a8d45995ceeb6ca4e81240f33cc32e92, type: 3}
   crystalTwoSound: {fileID: 8300000, guid: 603ce97a57486f74392d0517d9f1d951, type: 3}
   asteroidDestruction: {fileID: 8300000, guid: d9b7f529b7883ec4ea9d3cb556dd6c12, type: 3}

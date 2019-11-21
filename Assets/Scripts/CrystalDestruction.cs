@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CrystalDestruction : MonoBehaviour
 {
@@ -8,7 +9,9 @@ public class CrystalDestruction : MonoBehaviour
     private int hitsTaken;
     private int dropOne;
     private int dropTwo;
+    private int dropPowerup;
     [SerializeField] private GameObject crystalDrop;
+    [SerializeField] private GameObject powerup;
     private ScoreManager scoreManager;
     private bool firstDrop = false;
     private bool secondDrop = false;
@@ -27,6 +30,14 @@ public class CrystalDestruction : MonoBehaviour
         dropOne = Random.Range(1, 3);
         dropTwo = Random.Range(4, 7);
         asteroidAudio = GetComponent<AudioSource>();
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName == "Level 2")
+        {
+            dropPowerup = Random.Range(1, 11);
+        }
     }
 
     // Update is called once per frame
@@ -48,6 +59,11 @@ public class CrystalDestruction : MonoBehaviour
 
         if (healthPool == hitsTaken)
         {
+            if(dropPowerup == 1)
+            {
+                SpawnPowerup();
+            }
+
             Destroy(gameObject, 5);
             scoreManager.AsteroidScoring();
             asteroidModel.SetActive(false);
@@ -74,5 +90,10 @@ public class CrystalDestruction : MonoBehaviour
     private void DropCrystal()
     {
         Instantiate(crystalDrop, transform.position, transform.rotation);
+    }
+
+    private void SpawnPowerup()
+    {
+        Instantiate(powerup, transform.position, transform.rotation);
     }
 }

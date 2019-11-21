@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpawnManager : MonoBehaviour
 {
@@ -9,11 +10,11 @@ public class SpawnManager : MonoBehaviour
     [SerializeField] private GameObject bossSummoner;
     private int initialEnemiesSpawned;
     private int initialAsteroidsSpawned;
-    private int maxInitialEnemiesSpawned = 10;
+    private int maxInitialEnemiesSpawned;
     private int maxInitialAsteroidsSpawned = 1000;
     private int enemiesSpawned;
     private int asteroidsSpawned;
-    private int maxEnemiesSpawned = 5;
+    private int maxEnemiesSpawned;
     private int maxAsteroidsSpawned = 30;
     private float spawnRangeX = 150;
     private float spawnRangeZ = 150;
@@ -27,6 +28,20 @@ public class SpawnManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if(sceneName == "Level 1")
+        {
+            maxInitialEnemiesSpawned = 5;
+            maxEnemiesSpawned = 3;
+        }
+        else if(sceneName == "Level 2")
+        {
+            maxInitialEnemiesSpawned = 10;
+            maxEnemiesSpawned = 5;
+        }
+
         while (initialEnemiesSpawned < maxInitialEnemiesSpawned)
         {
             Vector3 spawnPos = new Vector3(Random.Range(-initialEnemySpawnRangeX, initialEnemySpawnRangeX), 0, Random.Range(-initialEnemySpawnRangeZ, initialEnemySpawnRangeZ));

@@ -1286,6 +1286,7 @@ MonoBehaviour:
     type: 3}
   bossSummoner: {fileID: 7056363167629937771, guid: 0a7c126af96cb734fbb389ac4c0a97d9,
     type: 3}
+  powerup: {fileID: 1615135074693538809, guid: 9ddd33d23f5f33a44b28b5ab2c73e819, type: 3}
 --- !u!4 &1451004541
 Transform:
   m_ObjectHideFlags: 0
