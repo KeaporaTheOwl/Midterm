@@ -12,6 +12,7 @@ public class BossMovement : MonoBehaviour
     private GameObject player;
     private ScoreManager scoreManager;
     private AudioSource bossAudio;
+    private string sceneName;
     [SerializeField] private AudioClip bossDamaged;
     [SerializeField] private AudioClip bossDestroyed;
     [SerializeField] private AudioClip spawnSound;
@@ -26,6 +27,9 @@ public class BossMovement : MonoBehaviour
         scoreManager = FindObjectOfType<ScoreManager>();
         bossAudio = GetComponent<AudioSource>();
         bossAudio.PlayOneShot(spawnSound, 1);
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        sceneName = currentScene.name;
     }
 
     // Update is called once per frame
@@ -42,7 +46,15 @@ public class BossMovement : MonoBehaviour
             GameObject[] allEnemies = GameObject.FindGameObjectsWithTag("Enemy");
             GameObject[] allAsteroids = GameObject.FindGameObjectsWithTag("Asteroid");
             GameObject[] allCrystals = GameObject.FindGameObjectsWithTag("Crystal");
-            Invoke("GameOver", 3);
+
+            if(sceneName == "Level 1")
+            {
+                Invoke("NextLevel", 3);
+            }
+            else if(sceneName == "Level 2")
+            {
+                Invoke("GameOver", 3);
+            }
 
             foreach (GameObject enemy in allEnemies)
             {
@@ -94,6 +106,11 @@ public class BossMovement : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+    }
+
+    private void NextLevel()
+    {
+        SceneManager.LoadScene("Level 2");
     }
 
     private void GameOver()

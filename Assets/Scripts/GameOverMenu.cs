@@ -15,6 +15,8 @@ public class GameOverMenu : MonoBehaviour
         finalScore = ScoreManager.score;
         finalScoreText.text = "You scored: " + finalScore + " points!";
         ScoreManager.score = 0;
+        PlayerController.playerLives = 3;
+        PlayerController.crystalsCollected = 0;
     }
 
     public void RestartGame()
