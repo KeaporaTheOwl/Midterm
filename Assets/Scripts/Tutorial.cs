@@ -11,6 +11,8 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private GameObject asteroid;
     [SerializeField] private GameObject powerup;
     [SerializeField] private Text tutorialText;
+    private int xRange = 15;
+    private int zRange = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +23,24 @@ public class Tutorial : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(player.transform.position.z > 5)
+        if(player.transform.position.z > zRange)
         {
-            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 5);
+            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, zRange);
+        }
+
+        if(player.transform.position.z < -zRange)
+        {
+            player.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -zRange);
+        }
+
+        if (player.transform.position.x > xRange)
+        {
+            player.transform.position = new Vector3(xRange, player.transform.position.y, player.transform.position.z);
+        }
+
+        if (player.transform.position.x < -xRange)
+        {
+            player.transform.position = new Vector3(-xRange, player.transform.position.y, player.transform.position.z);
         }
     }
 
@@ -48,8 +65,8 @@ public class Tutorial : MonoBehaviour
         yield return new WaitForSeconds(10);
 
         tutorialText.text = "Eventually, asteroids will drop powerup crystals. Pass over it to collect it. It will increase your firing rate immensely.";
-        yield return new WaitForSeconds(10);
         Instantiate(powerup, new Vector3(7.5f, 0, 0), transform.rotation);
+        yield return new WaitForSeconds(10);
 
         tutorialText.text = "That is all you need to know for your mission. Good luck out there, friend. Moving you to the enemy sector.";
         yield return new WaitForSeconds(10);

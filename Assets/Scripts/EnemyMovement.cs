@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnemyMovement : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private AudioClip enemyDeath;
     [SerializeField] private GameObject enemyShipModel;
     [SerializeField] private ParticleSystem explosionParticle;
+    private bool isTutorial = false;
 
     // Start is called before the first frame update
     void Start()
@@ -28,6 +30,18 @@ public class EnemyMovement : MonoBehaviour
         enemyShipCollider = GetComponentInChildren<Collider>();
         scoreManager = FindObjectOfType<ScoreManager>();
         enemyAudio = GetComponent<AudioSource>();
+
+        Scene currentScene = SceneManager.GetActiveScene();
+        string sceneName = currentScene.name;
+
+        if (sceneName == "Tutorial")
+        {
+            isTutorial = true;
+        }
+        else
+        {
+            isTutorial = false;
+        }
     }
 
     // Update is called once per frame
@@ -41,7 +55,7 @@ public class EnemyMovement : MonoBehaviour
         Vector3 targetPosition = new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z);
         transform.LookAt(targetPosition);
 
-        if (distance < firingRange && Time.time > reload + rateOfFire)
+        if (isTutorial == false && distance < firingRange && Time.time > reload + rateOfFire)
         {
             reload = Time.time;
             ShootProjectile();

@@ -19,9 +19,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform bombSpawn;
     private bool canShoot = true;
     private bool hasPowerup = false;
-    public static int crystalsCollected = 0;
+    private int crystalsCollected = 0;
     private int maxCrystals = 20;
-    public static int playerLives = 3;
+    private int playerLives = 3;
     private float firingSpeed = .15f;
     private Collider shipCollider;
     [SerializeField] private Text bombsCreated;
