@@ -61,7 +61,7 @@ public class Tutorial : MonoBehaviour
         Instantiate(enemy, new Vector3(7.5f, 0, 0), transform.rotation);
         yield return new WaitForSeconds(10);
 
-        tutorialText.text = "Over time, the enemy's leader — Galactus — will be reforged. Bombs are the only means to damage it. Press Left Shift to deploy a bomb.";
+        tutorialText.text = "Over time, the enemy's leader — Galactus — will be reforged. Bombs home in on it and are the only means to damage it. Press Left Shift to deploy a bomb.";
         yield return new WaitForSeconds(10);
 
         tutorialText.text = "Eventually, asteroids will drop powerup crystals. Pass over it to collect it. It will increase your firing rate immensely.";
